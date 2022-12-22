@@ -4,7 +4,7 @@ import { LoadBook, SaveBook } from '@/domain/contracts/repo'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 
-describe('', () => {
+describe('Add Book', () => {
   let sut: AddBook
   let bookRepo: MockProxy<LoadBook & SaveBook>
   let book: { sbn: string, name: string, description: string, author: string, stock: number }

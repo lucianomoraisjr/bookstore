@@ -14,3 +14,11 @@ export namespace SaveBook {
   export type Input = { sbn: string, name: string, description: string, author: string, stock: number }
   export type Output = { id: number }
 }
+
+export interface LoadBookPagination {
+  loadPagination: () => Promise<LoadBookPagination.Output>
+}
+
+export namespace LoadBookPagination {
+  export type Output = [ books: Array<{ name: string }>, amount: number ]
+}
