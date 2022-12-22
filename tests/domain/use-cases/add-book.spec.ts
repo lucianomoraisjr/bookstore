@@ -1,4 +1,5 @@
 import { AddBook, setupAddBook } from '@/domain/use-cases'
+import { ExistingBookError } from '@/domain/errors'
 import { LoadBook, SaveBook } from '@/domain/contracts/repo'
 
 import { mock, MockProxy } from 'jest-mock-extended'
@@ -25,12 +26,12 @@ describe('', () => {
     expect(bookRepo.load).toHaveBeenCalledWith({ sbn: book.sbn })
   }
   )
-  it('should call LoadBook with correct input', async () => {
+  it('should rethrow if load other than undefined ', async () => {
     bookRepo.load.mockResolvedValueOnce({ author: 'any_author', description: 'any_description', name: 'any_name', sbn: 'any_sbn', stock: 1, id: 1 })
 
-    await sut(book).catch((e) => {
-      expect(e.message).toBe('existing book')
-    })
+    const promise = sut(book)
+
+    await expect(promise).rejects.toThrow(new ExistingBookError())
   })
 
   it('should rethrow if LoadBook throws', async () => {
