@@ -6,7 +6,7 @@ import { makeFakeDb } from '@/tests/infra/repos/postgres/mocks'
 import { IBackup } from 'pg-mem'
 import { Repository } from 'typeorm'
 
-describe('', () => {
+describe('BookRepo', () => {
   let sut: PgBookRepository
   let connection: PgConnection
   let pgBookRepo: Repository<PgBook>
@@ -56,6 +56,14 @@ describe('', () => {
 
       expect(pgbook?.id).toBe(1)
       expect(id).toBe(1)
+    })
+  })
+
+  describe('loadPagination', () => {
+    it('should return an book if sbn exists', async () => {
+      await pgBookRepo.save(input)
+      const book = await sut.loadPagination({ page: 1 })
+      expect(book).toEqual([[{ name: 'any_name' }], 1])
     })
   })
 })

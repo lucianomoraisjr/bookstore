@@ -5,7 +5,9 @@ import { mock, MockProxy } from 'jest-mock-extended'
 describe('ListBookPagination', () => {
   let sut: ListBookPagination
   let bookRepo: MockProxy<LoadBookPagination>
+  let page: number
   beforeAll(() => {
+    page = 1
     bookRepo = mock()
     bookRepo.loadPagination.mockResolvedValue([[{ name: 'livro1' }, { name: 'livro2' }], 2])
   })
@@ -13,17 +15,17 @@ describe('ListBookPagination', () => {
     sut = setupListBookPagination(bookRepo)
   })
   it('should call LoadBookPagination ', async () => {
-    await sut()
+    await sut({ page })
     expect(bookRepo.loadPagination).toHaveBeenCalledTimes(1)
   })
   it('shoudl return LoadBookPagination', async () => {
-    const promise = await sut()
+    const promise = await sut({ page })
     expect(promise).toEqual([[{ name: 'livro1' }, { name: 'livro2' }], 2])
   })
   it('should rethrow if LoadBookPagination throws', async () => {
     bookRepo.loadPagination.mockRejectedValueOnce(new Error('load_error'))
 
-    const promise = sut()
+    const promise = sut({ page })
 
     await expect(promise).rejects.toThrow(new Error('load_error'))
   })

@@ -16,9 +16,10 @@ export namespace SaveBook {
 }
 
 export interface LoadBookPagination {
-  loadPagination: () => Promise<LoadBookPagination.Output>
+  loadPagination: (input: LoadBookPagination.Input) => Promise<LoadBookPagination.Output>
 }
 
 export namespace LoadBookPagination {
+  export type Input = { page: number }
   export type Output = [ books: Array<{ name: string }>, amount: number ]
 }
