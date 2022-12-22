@@ -26,7 +26,7 @@ describe('', () => {
   }
   )
   it('should call LoadBook with correct input', async () => {
-    bookRepo.load.mockResolvedValueOnce(book)
+    bookRepo.load.mockResolvedValueOnce({ author: 'any_author', description: 'any_description', name: 'any_name', sbn: 'any_sbn', stock: 1, id: 1 })
 
     await sut(book).catch((e) => {
       expect(e.message).toBe('existing book')

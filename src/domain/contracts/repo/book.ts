@@ -4,7 +4,7 @@ export interface LoadBook {
 
 export namespace LoadBook {
   export type Input = { sbn: string }
-  export type Output = undefined | { sbn: string, name: string, description: string, author: string, stock: number }
+  export type Output = undefined | { id: number, sbn: string, name: string, description: string, author: string, stock: number }
 }
 export interface SaveBook {
   save: (input: SaveBook.Input) => Promise<SaveBook.Output>
@@ -12,5 +12,5 @@ export interface SaveBook {
 
 export namespace SaveBook {
   export type Input = { sbn: string, name: string, description: string, author: string, stock: number }
-  export type Output = { id: string }
+  export type Output = { id: number }
 }

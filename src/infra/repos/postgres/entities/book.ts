@@ -8,15 +8,15 @@ export class PgBook {
   @Column()
     sbn!: string
 
-  @Column()
-    nome!: string
+  @Column({ name: 'nome' })
+    name!: string
 
-  @Column()
-    descricao!: string
+  @Column({ name: 'descricao' })
+    description!: string
 
-  @Column()
-    autor!: string
+  @Column({ name: 'autor' })
+    author!: string
 
-  @Column()
-    estoque!: number
+  @Column({ name: 'estoque' })
+    stock!: number
 }
