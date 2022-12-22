@@ -1,8 +1,8 @@
-import { LoadBook, SaveBook, LoadBookPagination } from '@/domain/contracts/repo'
+import { LoadBook, SaveBook, LoadBookPagination, UpdateBook } from '@/domain/contracts/repo'
 import { PgRepository } from '@/infra/repos/postgres/repository'
 import { PgBook } from '@/infra/repos/postgres/entities'
 
-export class PgBookRepository extends PgRepository implements LoadBook, SaveBook, LoadBookPagination {
+export class PgBookRepository extends PgRepository implements LoadBook, SaveBook, LoadBookPagination, UpdateBook {
   private readonly pgbookRepo = this.getRepository(PgBook)
 
   async load ({ sbn, name }: LoadBook.Input): Promise<LoadBook.Output> {
@@ -17,6 +17,10 @@ export class PgBookRepository extends PgRepository implements LoadBook, SaveBook
   async save (input: SaveBook.Input): Promise<SaveBook.Output> {
     const { id } = await this.pgbookRepo.save(input)
     return { id }
+  }
+
+  async update ({ author, description, name, stock, sbn }: UpdateBook.Input): Promise<void> {
+    await this.pgbookRepo.update({ sbn }, { author, description, name, stock })
   }
 
   async loadPagination ({ page }: LoadBookPagination.Input): Promise<LoadBookPagination.Output> {

@@ -12,6 +12,7 @@ describe('BookRepo', () => {
   let pgBookRepo: Repository<PgBook>
   let backup: IBackup
   let input: { sbn: string, name: string, description: string, author: string, stock: number }
+  const inputUpdate = { author: 'any_author_up', description: 'any_description_up', name: 'any_name_up', sbn: 'any_sbn', stock: 2 }
 
   beforeAll(async () => {
     connection = PgConnection.getInstance()
@@ -71,6 +72,15 @@ describe('BookRepo', () => {
       await pgBookRepo.save(input)
       const book = await sut.loadPagination({ page: 1 })
       expect(book).toEqual([[{ name: 'any_name' }], 1])
+    })
+  })
+  describe('Update', () => {
+    it('should return ', async () => {
+      await pgBookRepo.save(input)
+      const { author, description, name, stock } = inputUpdate
+      await sut.update({ sbn: input.sbn, author, description, name, stock })
+      const book = await pgBookRepo.findOne({ sbn: input.sbn })
+      expect(book).toMatchObject({ sbn: input.sbn, author: 'any_author_up', description: 'any_description_up', name: 'any_name_up', stock: 2 })
     })
   })
 })

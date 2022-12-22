@@ -14,6 +14,14 @@ export namespace SaveBook {
   export type Input = { sbn: string, name: string, description: string, author: string, stock: number }
   export type Output = { id: number }
 }
+export interface UpdateBook {
+  update: (input: UpdateBook.Input) => Promise<void>
+}
+
+export namespace UpdateBook {
+  export type Input = { sbn: string, name: string, description: string, author: string, stock: number }
+
+}
 
 export interface LoadBookPagination {
   loadPagination: (input: LoadBookPagination.Input) => Promise<LoadBookPagination.Output>
