@@ -10,7 +10,9 @@ jest.mock('typeorm', () => ({
   createConnection: jest.fn(),
   getConnection: jest.fn(),
   getConnectionManager: jest.fn(),
-  getRepository: jest.fn()
+  getRepository: jest.fn(),
+  CreateDateColumn: jest.fn(),
+  UpdateDateColumn: jest.fn()
 }))
 
 describe('PgConnection', () => {

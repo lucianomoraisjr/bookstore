@@ -7,7 +7,7 @@ export class PgBookRepository extends PgRepository implements LoadBook, SaveBook
 
   async load ({ sbn }: LoadBook.Input): Promise<LoadBook.Output> {
     const book = await this.pgbookRepo.findOne({ sbn })
-    if (book != null) {
+    if (book) {
       const { author, description, id, name, sbn, stock } = book
       return { author, description, id, name, sbn, stock }
     }

@@ -2,7 +2,8 @@ module.exports = {
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
     '!<rootDir>/src/main/**',
-    '!<rootDir>/src/**/index.ts'
+    '!<rootDir>/src/**/index.ts',
+    '!<rootDir>/src/infra/repos/postgres/migrations/**'
   ],
   coverageDirectory: 'coverage',
   coverageProvider: 'babel',
@@ -18,6 +19,7 @@ module.exports = {
   transform: {
     '\\.ts$': 'ts-jest'
   },
-  clearMocks: true
+  clearMocks: true,
+  setupFiles: ['dotenv/config']
 
 }
