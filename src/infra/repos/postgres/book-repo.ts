@@ -5,8 +5,8 @@ import { PgBook } from '@/infra/repos/postgres/entities'
 export class PgBookRepository extends PgRepository implements LoadBook, SaveBook, LoadBookPagination {
   private readonly pgbookRepo = this.getRepository(PgBook)
 
-  async load ({ sbn }: LoadBook.Input): Promise<LoadBook.Output> {
-    const book = await this.pgbookRepo.findOne({ sbn })
+  async load ({ sbn, name }: LoadBook.Input): Promise<LoadBook.Output> {
+    const book = await this.pgbookRepo.findOne({ where: [{ sbn }, { name }] })
     if (book) {
       const { author, description, id, name, sbn, stock } = book
       return { author, description, id, name, sbn, stock }

@@ -33,16 +33,23 @@ describe('BookRepo', () => {
   })
 
   describe('load', () => {
-    it('should return an book if sbn exists', async () => {
+    it('should return an book if sbn ou name exists', async () => {
       await pgBookRepo.save(input)
 
-      const book = await sut.load({ sbn: 'any_sbn' })
+      const book = await sut.load({ sbn: 'any_sbn', name: 'any_name' })
+
+      expect(book).toMatchObject({ id: 1 })
+    })
+    it('should return an book if  name exists', async () => {
+      await pgBookRepo.save(input)
+
+      const book = await sut.load({ name: 'any_name' })
 
       expect(book).toMatchObject({ id: 1 })
     })
 
-    it('should return an undefined if sbn exists', async () => {
-      const book = await sut.load({ sbn: 'any_sbn' })
+    it('should return an undefined if sbn ou name does not exist', async () => {
+      const book = await sut.load({ sbn: 'any_sbn', name: 'any_name' })
 
       expect(book).toBeUndefined()
     })
@@ -52,7 +59,7 @@ describe('BookRepo', () => {
     it('should create an book', async () => {
       const { id } = await sut.save(input)
 
-      const pgbook = await pgBookRepo.findOne({ sbn: 'any_sbn' })
+      const pgbook = await pgBookRepo.findOne({ sbn: 'any_sbn', name: 'any_name' })
 
       expect(pgbook?.id).toBe(1)
       expect(id).toBe(1)

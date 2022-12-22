@@ -5,7 +5,7 @@ type Input = { sbn: string, name: string, description: string, author: string, s
 export type AddBook = (input: Input) => Promise<void>
 
 export const setupAddBook: Setup = (bookRepo) => async ({ sbn, name, description, author, stock }) => {
-  const book = await bookRepo.load({ sbn })
+  const book = await bookRepo.load({ sbn, name })
 
   if (book !== undefined) throw new ExistingBookError()
 

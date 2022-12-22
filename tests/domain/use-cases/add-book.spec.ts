@@ -23,7 +23,7 @@ describe('Add Book', () => {
     await sut(book)
 
     expect(bookRepo.load).toHaveBeenCalledTimes(1)
-    expect(bookRepo.load).toHaveBeenCalledWith({ sbn: book.sbn })
+    expect(bookRepo.load).toHaveBeenCalledWith({ sbn: book.sbn, name: book.name })
   }
   )
   it('should rethrow if load other than undefined ', async () => {
