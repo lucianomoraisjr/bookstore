@@ -1,10 +1,10 @@
 DESAFIO TÉCNICO - BACKEND
 
-#Docker Compose
+# Docker Compose
       instalar dependências: npm install
       fazer o build da aplicação: npm run build
       executar o docker compose up
-#Cumprimento requisitos funcionais
+# Cumprimento requisitos funcionais
  - Como usuário gostaria adicionar livros no meu microseviço; Os livros devem conter: SBN, Nome, Breve Descrição e Autor e Estoque;
   - Rota: Post baseUr/api/add
   - Parametros :  { sbn: string, name: string, description: string, author: string, stock: number }  Json
