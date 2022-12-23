@@ -39,7 +39,7 @@ describe('AddBookController', () => {
     expect(addBook).toHaveBeenCalledTimes(1)
   })
 
-  it('should return 422 if authentication fails', async () => {
+  it('should return 422 if AddBook fails', async () => {
     addBook.mockRejectedValueOnce(new ExistingBookError())
 
     const httpResponse = await sut.handle(book)
@@ -60,7 +60,7 @@ describe('AddBookController', () => {
       data: new ServerError(error)
     })
   })
-  it('should return 200 if authentication succeeds', async () => {
+  it('should return 200 if AddBook succeeds', async () => {
     const httpResponse = await sut.handle(book)
 
     expect(httpResponse).toEqual({
