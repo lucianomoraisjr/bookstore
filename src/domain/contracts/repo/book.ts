@@ -1,9 +1,17 @@
-export interface LoadBook {
-  load: (input: LoadBook.Input) => Promise<LoadBook.Output>
+export interface LoadBookBySbn {
+  loadBySbn: (input: LoadBookBySbn.Input) => Promise<LoadBookBySbn.Output>
 }
 
-export namespace LoadBook {
-  export type Input = { sbn?: string, name?: string }
+export namespace LoadBookBySbn {
+  export type Input = { sbn: string }
+  export type Output = undefined | { id: number, sbn: string, name: string, description: string, author: string, stock: number }
+}
+export interface LoadBookByNanme {
+  loadByName: (input: LoadBookByNanme.Input) => Promise<LoadBookByNanme.Output>
+}
+
+export namespace LoadBookByNanme {
+  export type Input = { name: string }
   export type Output = undefined | { id: number, sbn: string, name: string, description: string, author: string, stock: number }
 }
 export interface SaveBook {

@@ -34,23 +34,28 @@ describe('BookRepo', () => {
   })
 
   describe('load', () => {
-    it('should return an book if sbn ou name exists', async () => {
+    it('should return an book if sbn exists', async () => {
       await pgBookRepo.save(input)
 
-      const book = await sut.load({ sbn: 'any_sbn', name: 'any_name' })
+      const book = await sut.loadBySbn({ sbn: 'any_sbn' })
 
       expect(book).toMatchObject({ id: 1 })
     })
     it('should return an book if  name exists', async () => {
       await pgBookRepo.save(input)
 
-      const book = await sut.load({ name: 'any_name' })
+      const book = await sut.loadByName({ name: 'any_name' })
 
       expect(book).toMatchObject({ id: 1 })
     })
 
-    it('should return an undefined if sbn ou name does not exist', async () => {
-      const book = await sut.load({ sbn: 'any_sbn', name: 'any_name' })
+    it('should return an undefined if sbn does not exist', async () => {
+      const book = await sut.loadBySbn({ sbn: 'any_sbn' })
+
+      expect(book).toBeUndefined()
+    })
+    it('should return an undefined if name does not exist', async () => {
+      const book = await sut.loadByName({ name: 'any_name' })
 
       expect(book).toBeUndefined()
     })

@@ -1,11 +1,11 @@
 import { AlterBook, setupAlterBook } from '@/domain/use-cases'
 import { NameUnavailable } from '@/domain/errors'
-import { LoadBook, UpdateBook } from '@/domain/contracts/repo'
+import { LoadBookByNanme, UpdateBook } from '@/domain/contracts/repo'
 import { mock, MockProxy } from 'jest-mock-extended'
 
 describe('AlterBook', () => {
   let sut: AlterBook
-  let bookRepo: MockProxy<LoadBook & UpdateBook>
+  let bookRepo: MockProxy<LoadBookByNanme & UpdateBook>
   let book: { id: number, sbn: string, name: string, description: string, author: string, stock: number }
   beforeAll(() => {
     bookRepo = mock()
@@ -16,11 +16,11 @@ describe('AlterBook', () => {
   })
   it('should call LoadBook with correct input', async () => {
     await sut(book)
-    expect(bookRepo.load).toHaveBeenCalledTimes(1)
-    expect(bookRepo.load).toBeCalledWith({ name: 'any_name' })
+    expect(bookRepo.loadByName).toHaveBeenCalledTimes(1)
+    expect(bookRepo.loadByName).toBeCalledWith({ name: 'any_name' })
   })
   it('should throw NameUnavailable if name', async () => {
-    bookRepo.load.mockResolvedValueOnce({ id: 1, author: 'any_author', description: 'any_description', name: 'any_name', sbn: 'any_sbn_2', stock: 1 })
+    bookRepo.loadByName.mockResolvedValueOnce({ id: 1, author: 'any_author', description: 'any_description', name: 'any_name', sbn: 'any_sbn_2', stock: 1 })
 
     const promise = sut(book)
     await expect(promise).rejects.toThrow(new NameUnavailable())
@@ -31,16 +31,16 @@ describe('AlterBook', () => {
     expect(bookRepo.update).toBeCalledWith({ author: 'any_author', description: 'any_description', name: 'any_name', sbn: 'any_sbn', stock: 1 })
   })
 
-  it('should rethrow if LoadBook throws', async () => {
-    bookRepo.load.mockRejectedValueOnce(new Error('Load_error'))
+  it('should rethrow if loadByNameBook throws', async () => {
+    bookRepo.loadByName.mockRejectedValueOnce(new Error('loadByName_error'))
 
     const promise = sut(book)
 
-    await expect(promise).rejects.toThrow(new Error('Load_error'))
+    await expect(promise).rejects.toThrow(new Error('loadByName_error'))
   })
 
-  it('should rethrow if when LoadBook throws', async () => {
-    bookRepo.load.mockRejectedValueOnce(new Error('Up_error'))
+  it('should rethrow if when loadByNameBook throws', async () => {
+    bookRepo.loadByName.mockRejectedValueOnce(new Error('Up_error'))
 
     const promise = sut(book)
 
