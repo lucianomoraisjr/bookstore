@@ -8,6 +8,6 @@ export type AlterBook = (input: Input) => Promise<void>
 
 export const setupAlterBook: Setup = (bookRepo) => async ({ sbn, author, description, name, stock }) => {
   const serchName = await bookRepo.load({ name })
-  if (serchName) throw new NameUnavailable()
+  if (serchName && sbn !== serchName.sbn) throw new NameUnavailable()
   await bookRepo.update({ sbn, author, description, name, stock })
 }

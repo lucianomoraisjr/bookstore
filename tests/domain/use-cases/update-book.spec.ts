@@ -20,7 +20,7 @@ describe('AlterBook', () => {
     expect(bookRepo.load).toBeCalledWith({ name: 'any_name' })
   })
   it('should throw NameUnavailable if name', async () => {
-    bookRepo.load.mockResolvedValueOnce(book)
+    bookRepo.load.mockResolvedValueOnce({ id: 1, author: 'any_author', description: 'any_description', name: 'any_name', sbn: 'any_sbn_2', stock: 1 })
 
     const promise = sut(book)
     await expect(promise).rejects.toThrow(new NameUnavailable())
