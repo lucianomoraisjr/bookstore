@@ -1,7 +1,7 @@
 import { UpdateBookController, Controller } from '@/application/controllers'
 import { Required } from '@/application/validation'
 import { ServerError } from '@/application/errors'
-import { NameUnavailable } from '@/domain/errors'
+import { NameUnavailable, BookNotExist } from '@/domain/errors'
 describe('SerchBookController', () => {
   let sut: UpdateBookController
   let updateBook: jest.Mock
@@ -31,7 +31,7 @@ describe('SerchBookController', () => {
     expect(updateBook).toHaveBeenCalledTimes(1)
   })
 
-  it('should return 422 if UpdateBook fails', async () => {
+  it('should return 422 if error NameUnavailable', async () => {
     updateBook.mockRejectedValueOnce(new NameUnavailable())
 
     const httpResponse = await sut.handle(book)
@@ -41,7 +41,16 @@ describe('SerchBookController', () => {
       data: new NameUnavailable()
     })
   })
+  it('should return 422 if error BookNotExist', async () => {
+    updateBook.mockRejectedValueOnce(new BookNotExist())
 
+    const httpResponse = await sut.handle(book)
+
+    expect(httpResponse).toEqual({
+      statusCode: 422,
+      data: new BookNotExist()
+    })
+  })
   it('should return 500 on infra error', async () => {
     const error = new Error('infra_error')
     updateBook.mockRejectedValueOnce(error)

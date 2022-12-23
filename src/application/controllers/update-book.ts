@@ -1,7 +1,7 @@
 import { Controller } from '@/application/controllers'
 import { HttpResponse, unprocessableEntity, ok } from '@/application/helpers'
 import { ValidationBuilder as Builder, Validator } from '@/application/validation'
-import { NameUnavailable } from '@/domain/errors'
+import { NameUnavailable, BookNotExist } from '@/domain/errors'
 import { AlterBook } from '@/domain/use-cases'
 
 type HttpRequest = { sbn: string, name?: string, description?: string, author?: string, stock?: number }
@@ -17,7 +17,7 @@ export class UpdateBookController extends Controller {
       await this.alterBook({ name, sbn, author, description, stock })
       return ok({ message: 'Update Success' })
     } catch (error) {
-      if (error instanceof NameUnavailable) return unprocessableEntity(error)
+      if (error instanceof NameUnavailable || error instanceof BookNotExist) return unprocessableEntity(error)
       throw error
     }
   }
