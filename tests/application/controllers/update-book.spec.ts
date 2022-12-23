@@ -52,7 +52,7 @@ describe('SerchBookController', () => {
       data: new ServerError(error)
     })
   })
-  it('should return 200 if authentication succeeds', async () => {
+  it('should return 200 if UpdateBook succeeds', async () => {
     const httpResponse = await sut.handle(book)
     expect(httpResponse).toEqual({
       statusCode: 200,
