@@ -4,5 +4,5 @@ import { makeListBookPaginationController } from '@/main/factories/application/c
 import { Router } from 'express'
 
 export default (router: Router): void => {
-  router.get('/list/book/:page', adapt(makeListBookPaginationController()))
+  router.get('/list/:page', adapt(makeListBookPaginationController()))
 }

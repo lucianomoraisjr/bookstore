@@ -13,7 +13,7 @@ services:
       - postgres-compose-network
 
   api:
-    container_name: api-container-lj
+    container_name: api-book-container
     build: .
     image: node:16
     working_dir: /usr/src/node-api

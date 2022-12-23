@@ -4,5 +4,5 @@ import { makeUpdateBookController } from '@/main/factories/application/controlle
 import { Router } from 'express'
 
 export default (router: Router): void => {
-  router.put('/update/book', adapt(makeUpdateBookController()))
+  router.put('/update', adapt(makeUpdateBookController()))
 }

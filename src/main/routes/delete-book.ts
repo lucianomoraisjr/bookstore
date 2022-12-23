@@ -4,5 +4,5 @@ import { makeDeleteBookController } from '@/main/factories/application/controlle
 import { Router } from 'express'
 
 export default (router: Router): void => {
-  router.delete('/delete/book', adapt(makeDeleteBookController()))
+  router.delete('/delete', adapt(makeDeleteBookController()))
 }
