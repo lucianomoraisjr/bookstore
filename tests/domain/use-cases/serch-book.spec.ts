@@ -3,7 +3,7 @@ import { LoadBook } from '@/domain/contracts/repo'
 import { BookNotExist } from '@/domain/errors'
 
 import { mock, MockProxy } from 'jest-mock-extended'
-describe('', () => {
+describe('SerchBook', () => {
   let sut: SerchBook
   let bookRepo: MockProxy<LoadBook>
   let name: string
