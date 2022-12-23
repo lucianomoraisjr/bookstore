@@ -13,9 +13,9 @@ services:
       - postgres-compose-network
   api:
     container_name: api-book-container
-    image: node:16
-    working_dir: /usr/src/node-api
-    command: bash -c "npm install --only=prod && npx typeorm migration:run && npm start"
+    build: .
+    image: book-node
+    command: bash -c "npx typeorm migration:run && npm start"
     environment:
       - PG_DB_TYPE=postgres
       - PG_DB_HOST=postgres-compose
@@ -24,10 +24,6 @@ services:
       - PG_DB_PASSWORD=Postgres2019!
       - PG_DB_BASE=postgres
       - API_PORT=5050
-    volumes:
-      - ./dist/:/usr/src/node-api/dist/
-      - ./package.json:/usr/src/node-api/package.json
-      - ./ormconfig.js:/usr/src/node-api/ormconfig.js
     ports:
       - "5050:5050"
     depends_on:
