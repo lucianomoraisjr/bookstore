@@ -10,3 +10,10 @@ export class BookNotExist extends Error {
     this.name = 'BookNotExist'
   }
 }
+
+export class NameUnavailable extends Error {
+  constructor () {
+    super('Name unavailable')
+    this.name = 'NameUnavailable'
+  }
+}

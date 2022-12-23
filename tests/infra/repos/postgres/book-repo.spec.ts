@@ -70,17 +70,35 @@ describe('BookRepo', () => {
   describe('loadPagination', () => {
     it('should return an book if sbn exists', async () => {
       await pgBookRepo.save(input)
+
       const book = await sut.loadPagination({ page: 1 })
+
       expect(book).toEqual([[{ name: 'any_name' }], 1])
     })
   })
   describe('Update', () => {
-    it('should return ', async () => {
+    it('should return book update', async () => {
       await pgBookRepo.save(input)
+
       const { author, description, name, stock } = inputUpdate
+
       await sut.update({ sbn: input.sbn, author, description, name, stock })
+
       const book = await pgBookRepo.findOne({ sbn: input.sbn })
+
       expect(book).toMatchObject({ sbn: input.sbn, author: 'any_author_up', description: 'any_description_up', name: 'any_name_up', stock: 2 })
+    })
+  })
+
+  describe('Delete', () => {
+    it('should delete book', async () => {
+      await pgBookRepo.save(input)
+
+      await sut.delete({ sbn: input.sbn })
+
+      const book = await pgBookRepo.findOne({ sbn: input.sbn })
+
+      expect(book).toBeUndefined()
     })
   })
 })

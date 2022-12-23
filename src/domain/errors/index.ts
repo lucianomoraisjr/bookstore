@@ -1,1 +1,1 @@
-export * from './existing-book'
+export * from './book'
