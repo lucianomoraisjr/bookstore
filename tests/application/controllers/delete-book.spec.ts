@@ -1,6 +1,7 @@
 import { DeleteBookController, Controller } from '@/application/controllers'
 import { Required } from '@/application/validation'
 import { ServerError } from '@/application/errors'
+import { BookNotExist } from '@/domain/errors'
 
 describe('SerchBookController', () => {
   let sut: DeleteBookController
@@ -31,7 +32,16 @@ describe('SerchBookController', () => {
     expect(deleteBook).toHaveBeenCalledWith({ sbn })
     expect(deleteBook).toHaveBeenCalledTimes(1)
   })
+  it('should return 422 if BookNotExist fails', async () => {
+    deleteBook.mockRejectedValueOnce(new BookNotExist())
 
+    const httpResponse = await sut.handle({ sbn })
+
+    expect(httpResponse).toEqual({
+      statusCode: 422,
+      data: new BookNotExist()
+    })
+  })
   it('should return 500 on infra error', async () => {
     const error = new Error('infra_error')
     deleteBook.mockRejectedValueOnce(error)
